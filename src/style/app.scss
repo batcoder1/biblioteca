@@ -1,0 +1,20 @@
+// styles in src/style directory are applied to the whole page
+html {
+    background-image: url("/img/library.jpg");
+    background-repeat: no-repeat;
+    width: 90%;
+    color:white;
+    font-family:  Verdana, Helvetica, sans-serif;
+}
+body{
+   
+    padding: 1em;
+    text-align: center;
+    margin-top: 50px;
+    display: block;
+    background: rgba(242, 244, 245, 0);
+   
+ }
+
+
+ 

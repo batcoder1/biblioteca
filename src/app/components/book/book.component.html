@@ -1,0 +1,131 @@
+<div class="link-modal pull-right" id="linkmodal">
+  <a href="#" (click)="showChildModal()">Añadir Libro</a>
+</div>
+<div class="Page-title">Catálogo</div>
+
+<div class="Grid Grid-header">
+  <div class="Grid-cell">Título</div>
+  <div class="Grid-cell">Autor</div>
+  <div class="Grid-cell">Tipo</div>
+  <div class="Grid-cell">ISBIN</div>
+  <div class="Grid-cell">Genero</div>
+  <div class="Grid-cell">Lectores</div>
+  <div class="Grid-cell">Fecha</div>
+  <div class="Grid-cell">Opciones</div>
+</div>
+
+
+
+<div class="Grid" *ngFor="let book of books; let i = index;">
+  <div class="Grid-title">
+    <div id="title-{{i}}">{{book.title}}</div>
+  </div>
+  <div class="Grid-cell">
+    <div id="author-{{i}}">{{book.author}}</div>
+  </div>
+  <div class="Grid-cell">
+    <div id="type-{{i}}">{{book.metadata.type}}</div>
+  </div>
+  <div class="Grid-cell">
+    <div id="isbin-{{i}}">{{book.metadata.isbin}}</div>
+  </div>
+  <div class="Grid-cell">
+    <div id="genre-{{i}}">{{book.metadata.genre}}</div>
+  </div>
+  <div class="Grid-cell">
+    <div *ngFor="let user of book.users">
+      <div id="genre-{{i}}">{{user.name}}</div>
+    </div>
+  </div>
+  <div class="Grid-cell">
+    <div id="date-{{i}}">{{book.metadata.date | date: 'longDate'}}</div>
+  </div>
+  <div class="Grid-cell">
+    <button type="button" class="Grid-button" (click)="editBook(book)">
+      <img src="/icons/edit.png" width="20" />
+    </button>
+    <button type="button" class="Grid-button" (click)="deleteBook(book)">
+      <img src="/icons/delete.png" width="20" />
+    </button>
+
+  </div>
+</div>
+
+
+
+
+
+<div bsModal id="#modal" #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Book - Biblioteca Nacional</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="bookForm" novalidate>
+            <div class="form-group">
+                <label class="center-block">Título:
+                    <input type="text" id="title"  class="form-control" formControlName="title" #title required>
+                </label>
+                <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+                    <div *ngIf="title.errors.required">El título es requerido.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="center-block">Autor:
+                    <input type="text" id="author" class="form-control" formControlName="author" #author required>
+                </label>
+                <div *ngIf="author.invalid && (author.dirty || author.touched)" class="alert alert-danger">
+                    <div *ngIf="author.errors.required">El autor es requerido.</div>
+                </div>
+            </div>
+            <div formGroupName="metadata" novalidate>
+                <div class="form-group">
+                    <label class="center-block">Tipo:
+                        <input type="text" id="type" class="form-control" formControlName="type" disabled>
+                    </label>
+                    
+                </div>
+                
+                <div class="form-group">
+                    <label class="center-block">Isbin:
+                        <input type="text" id="isbin" class="form-control" formControlName="isbin"  required>
+                    </label>
+                
+                </div>
+                
+                <div class="form-group">
+                    <label class="center-block">Género:
+                    <input type="text" id="genre" class="form-control" formControlName="genre"  required>
+                    </label>
+                
+                </div>
+                <div class="form-group">
+                    <label class="center-block">Fecha:
+                    <input type="date"  class="form-control" formControlName="date"  required>
+                    </label>
+                
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <label for="user">Users:</label>
+                <select class="form-control" id="user" required>
+                        <option *ngFor="let user of users" [value]="pow">{{user.name}}</option>
+                </select>
+            </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="hideChildModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="bookForm.invalid"  (click)="confirm()">OK</button>
+        </div>
+        </div>
+      </div>
+    </div>
