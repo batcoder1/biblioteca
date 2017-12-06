@@ -1,0 +1,21 @@
+<div class="link-modal pull-right" id="linkmodal">
+  <div class="Page-title">Lectores</div>
+
+  <div class="Grid Grid-header">
+    <div class="Grid-cell">Nombre</div>
+    <div class="Grid-cell">Libros Leidos</div>
+  </div>
+
+  <div class="Grid" *ngFor="let user of users; let i = index;">
+    <div class="Grid-title">
+      <div id="title-{{i}}">{{user.name}</div>
+    </div>
+    <div class="Grid-cell">
+      <div *ngFor="let book of user.books">
+        <div id="genre-{{i}}">{{book.title}}</div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

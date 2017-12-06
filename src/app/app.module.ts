@@ -1,32 +1,30 @@
 import { ModalModule } from 'ngx-bootstrap';
-import { BookService } from './services/book.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouteModule } from './modules/root/route.module';
 import { AppComponent } from './app.component';
-import { BookComponent } from './components/book/book.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { BookService } from './services/book.service';
+import { HomeComponent } from './components/home/home.component';
+import { BookComponent } from './components/book/book.component';
+import { UserComponent } from './components/user/user.component';
 
 
 @NgModule({
   imports: [
     BrowserModule,
-    HttpModule,
-    FormsModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
-    BootstrapModalModule,
+    RouteModule,
     ModalModule.forRoot()
   ],
-  declarations: [
-    AppComponent, BookComponent
+  declarations: [ AppComponent,
+    HomeComponent, BookComponent,
+    UserComponent
   ],
-  entryComponents: [
-  ],
-  providers: [ BookService],
+  providers: [BookService],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })

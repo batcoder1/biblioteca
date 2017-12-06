@@ -1,9 +1,18 @@
- header {
-   text-align: left;
- }
-
-
-  
  
+ h1 {
+  font-size: 40px;
+  font-family: Verdana; 
+  color:white;
+}
+.container {
+  display: flex;
+  height: 20%;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
 
- 
+.item {
+  flex-basis: auto;
+  flex-grow: 1 2;
+  margin: 10px; 
+}

@@ -1,0 +1,24 @@
+a {
+    font-size: 60px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color:white;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  
+  .item {
+    height: 50%;
+    flex-basis: auto;
+    flex-grow: 1;
+    border: 1px solid white;
+    margin: 1em;
+    padding: 15em 0.5em; 
+  }
+  
