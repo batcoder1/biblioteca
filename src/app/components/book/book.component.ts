@@ -1,9 +1,8 @@
 
 import { GENRES } from './../../shared/constants';
-import { Metadata, Filter } from './../../shared/model';
 import { Component } from '@angular/core';
 import { BookService } from './../../services/book.service';
-import { Book, User, Metadata } from '../../shared/model';
+import { Book, User, Filter, Metadata } from '../../shared/model';
 import { OnInit } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
