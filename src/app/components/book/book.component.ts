@@ -1,13 +1,17 @@
+import { GENRES } from './../../shared/constants';
 import { Metadata } from './../../shared/model';
 import { Component } from '@angular/core';
 import { BookService } from './../../services/book.service';
 import { Book, User } from '../../shared/model';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { OnInit } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { USERS } from '../../shared/constants';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import 'dateformat/';
+
 
 @Component({
     selector: 'app-book',
@@ -17,19 +21,17 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 export class BookComponent implements OnInit {
     @ViewChild('childModal') childModal: ModalDirective;
+    genres = GENRES;
+    users = USERS;
     books: Book[] = [];
     new = false;
-    generos = [
-        { id: 1, name: 'Novela' },
-        { id: 2, name: 'Terror' },
-        { id: 3, name: 'Infantil' },
-        { id: 4, name: 'Poesía' },
-        { id: 5, name: 'Aventura' }
-    ];
-
     book: Book;
+    filterField= {title: '', author: '', isbin: '', genre: ''};
     bookForm: FormGroup;
-
+    filterForm: FormGroup;
+    userToAdd: User[] = [];
+    isDisabledAuthorGenre = false;
+    isDisabledTitleAuthorGenre = false;
     constructor(private bookService: BookService, private fb: FormBuilder) {
     }
 
@@ -39,28 +41,40 @@ export class BookComponent implements OnInit {
                 this.books = result;
                 console.log(result);
             }
-        );
+            );
         this.createForm();
     }
     createForm() {
         this.bookForm = this.fb.group({
-            title:  ['', Validators.required ],
-            author: ['', Validators.required ],
+            title: ['', Validators.required],
+            author: ['', Validators.required],
             users: [],
             metadata: this.fb.group({
                 type: 'T',
-                isbin: '',
+           
+      isbin: '',
                 genre: '',
-                date: new Date()
+                reserved: '',
+                date: '1999-01-01'
 
             })
         });
+        this.filterForm = new FormGroup({
+            title: new FormControl({value: '', disable: this.isDisabledTitleAuthorGenre}),
+            author: new FormControl({value: '', disable: this.isDisabledAuthorGenre || this.isDisabledTitleAuthorGenre}),
+            isbin: new FormControl({value: ''}),
+            genre: new FormControl({value: '', disable: this.isDisabledAuthorGenre }),
+        });
     }
-    editedBook() {
-        const book = this.prepareSaveBook();
+    editBook(book: Book) {
+        this.loadBookInForm(book);
+        this.childModal.show();
+    }
+    editedBook(book: Book) {
         const index = this.books.indexOf(book);
         this.books.splice(index, 1, book);
-      }
+        this.closeModal();
+    }
     deleteBook(book: Book) {
         const index = this.books.indexOf(book);
         this.books.splice(index, 1);
@@ -69,17 +83,17 @@ export class BookComponent implements OnInit {
         const formModel = this.bookForm.value;
 
         const metadata: Metadata = {
-            type: formModel.type as string,
-            isbin: formModel.isbin as string,
+            type: formModel.metadata.type as string,
+            isbin: formModel.metadata.isbin as string,
             reserved: '',
-            genre: formModel.genre as string,
-            date: formModel.date as Date,
+            genre: formModel.metadata.genre as string,
+            date: formModel.metadata.date as string,
+
         };
-        const users: User[] = [];
         const saveBook: Book = {
             title: formModel.title as string,
             author: formModel.author as string,
-            users: users,
+            users: this.userToAdd,
             metadata: metadata
         };
         return saveBook;
@@ -87,14 +101,42 @@ export class BookComponent implements OnInit {
 
     confirm() {
         const book = this.prepareSaveBook();
-        this.books = [...this.books, book];
+        console.log(this.books.indexOf(book));
+        if (this.books.indexOf(book) === -1) {
+            this.books = [...this.books, book];
+            this.closeModal();
+        } else {
+            this.editedBook(book);
+        }
+
+    }
+    addUserToLibro(event) {
+        // if don exist in userToAdd array, lo  incluye
+        if (this.userToAdd.indexOf(this.users[event.target.selectedIndex]) === -1) {
+            this.userToAdd.push(this.users[event.target.selectedIndex]);
+        }
     }
 
-    showChildModal(): void {
-        this.childModal.show();
+    deleteEnroll(u) {
+        this.userToAdd.splice(this.userToAdd.indexOf(u));
     }
-
-    hideChildModal(): void {
+    closeModal() {
+        this.userToAdd = [];
+        this.bookForm.reset();
         this.childModal.hide();
     }
+    loadBookInForm(book: Book) {
+        book.metadata.date = book.metadata.date;
+        this.bookForm.controls['title'].setValue(book.title);
+        this.bookForm.controls['author'].setValue(book.author);
+        this.bookForm.controls['metadata'].setValue(book.metadata);
+        this.bookForm.controls['users'].setValue(book.users);
+        this.userToAdd = book.users;
+    }
+    
+    filter(event) {
+        return event;
+
+    }
+
 }

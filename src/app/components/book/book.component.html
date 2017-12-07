@@ -1,5 +1,10 @@
+ 
+ 
 <div class="link-modal pull-right" id="linkmodal">
-  <a href="#" (click)="showChildModal()">Añadir Libro</a>
+  <button  (click)="childModal.show()">Añadir Libro</button>
+
+   
+
 </div>
 <div class="Page-title">Catálogo</div>
 
@@ -15,12 +20,52 @@
 </div>
 
 
+<div class="Grid Grid-filter" *ngIf="true">
+        <div class="Grid-cell">
+            <form [formGroup]="filterForm" novalidate>
+              <input type="text" [(ngModel)]="filterField.title" name="title"    (change)=filter(event) formControlName="title" (onclick)="isBlockedAuthorGenre = true">
+            </form>
+        </div>
+
+        <div class="Grid-cell">
+            <form [formGroup]="filterForm" novalidate>
+              <input type="text" [(ngModel)]="filterField.author" name="author"   (change)=filter(event) formControlName="author">
+            </form>
+        </div>
+        <div class="Grid-cell">
+
+        </div>
+        <div class="Grid-cell">
+            <form [formGroup]="filterForm" novalidate>
+              <input type="text" [(ngModel)]="filterField.isbin" name="isbin"   (change)=filter(event) formControlName="isbin" (onclick)="isBlockedTitleAuthorGenre = true">
+            </form>
+        </div>
+        <div class="Grid-cell">
+            <form [formGroup]="filterForm" novalidate>
+              <input type="text" [(ngModel)]="filterField.genre" name="genre"   (change)=filter(event) formControlName="genre">
+            </form>  
+        </div>
+        <div class="Grid-cell">
+        </div>
+        <div class="Grid-cell">
+        </div>
+        <div class="Grid-cell">
+          
+            <button type="button" class="Grid-button" (click)="deleteFilters()">
+              <img src="/icons/delete-white.png" width="20" />
+            </button>
+            <button type="button" class="Grid-button" (click)="closeFilters()">
+              <img src="/icons/arrow-up-white.png" width="20" />
+            </button>
+        </div>   
+    
+  </div>
 
 <div class="Grid" *ngFor="let book of books; let i = index;">
   <div class="Grid-title">
     <div id="title-{{i}}">{{book.title}}</div>
   </div>
-  <div class="Grid-cell">
+  <div class="Grid-cell">bookForm
     <div id="author-{{i}}">{{book.author}}</div>
   </div>
   <div class="Grid-cell">
@@ -55,13 +100,13 @@
 
 
 
-<div bsModal id="#modal" #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+<div bsModal id="mdModal"   #childModal="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">Book - Biblioteca Nacional</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+        <h5 class="modal-title pull-left">Book - Biblioteca Nacional</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -70,7 +115,7 @@
         <form [formGroup]="bookForm" novalidate>
             <div class="form-group">
                 <label class="center-block">Título:
-                    <input type="text" id="title"  class="form-control" formControlName="title" #title required>
+                    <input type="text" id="title"  class="form-control" formControlName="title"   #title required>
                 </label>
                 <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
                     <div *ngIf="title.errors.required">El título es requerido.</div>
@@ -85,7 +130,7 @@
                     <div *ngIf="author.errors.required">El autor es requerido.</div>
                 </div>
             </div>
-            <div formGroupName="metadata" novalidate>
+            <div formGroupName="metadata">
                 <div class="form-group">
                     <label class="center-block">Tipo:
                         <input type="text" id="type" class="form-control" formControlName="type" disabled>
@@ -99,31 +144,45 @@
                     </label>
                 
                 </div>
+                <div class="form-group">
+                    <label class="center-block">Fecha:
+                    <input type="text" pattern="\d{4}-\d{1,2}-\d{1,2}" class="form-control"  name="date" value=""  formControlName="date"  required>
+                    </label>
                 
+                </div>
                 <div class="form-group">
                     <label class="center-block">Género:
                     <input type="text" id="genre" class="form-control" formControlName="genre"  required>
                     </label>
                 
                 </div>
-                <div class="form-group">
-                    <label class="center-block">Fecha:
-                    <input type="date"  class="form-control" formControlName="date"  required>
-                    </label>
                 
+                <div class="form-group"  > 
+                    <label for="user">Género:</label>
+                    <select  id="user">
+                      <option *ngFor="let genre of genres; let i = index" [value]="genre.value">{{genre.name}} </option>
+                    </select>
                 </div>
                 
+                
             </div>
-            <div class="form-group">
+            
+            <div class="form-group"  (change)="addUserToLibro($event)"> 
                 <label for="user">Users:</label>
-                <select class="form-control" id="user" required>
-                        <option *ngFor="let user of users" [value]="pow">{{user.name}}</option>
+              <select  id="user">
+                <option id="select-{{i}}" *ngFor="let user of users; let i = index" [value]="id">{{user.name}} </option>
                 </select>
             </div>
+            <div class="form-group">
+                <div class="combo-group" *ngFor = "let u of userToAdd">
+                     <span class="combo-item ">{{u.name}}</span>
+                     <div  class="combo-item" (click)=deleteEnroll(u) ><img src="/icons/deletex.png" width="20"></div>
+                </div>
+            </div>    
         </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" (click)="hideChildModal()">Cancel</button>
+          <button type="button" class="btn btn-default" (click)="closeModal()">Cancel</button>
           <button type="submit" class="btn btn-primary" [disabled]="bookForm.invalid"  (click)="confirm()">OK</button>
         </div>
         </div>

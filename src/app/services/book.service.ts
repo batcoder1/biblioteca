@@ -13,16 +13,22 @@ export class BookService {
 
 
   getBooks(): Observable<Book[]> {
-      return this.http.get(BOOKS_URL)
+    return this.http.get(BOOKS_URL)
       .pipe(
-        map((result: JsonResponse) => {
-          let books: Book[] = [];
-          result.books.forEach((element: Book) => {
-            const book = new Book(element);
-            books = [...books, book];
-          });
-          return books;
-        })
-        );
+      map((result: JsonResponse) => {
+        let books: Book[] = [];
+        result.books.forEach((element: Book) => {
+          const book = new Book(element);
+          book.metadata.date = this.dateFormat(new Date(parseInt(book.metadata.date) * 1000).toString());
+          books = [...books, book];
+        });
+        return books;
+      })
+      );
+  }
+  dateFormat(dateStr: string) {
+    const date = new Date(dateStr);
+    const dateformat = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+    return dateformat;
   }
 }

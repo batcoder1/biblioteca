@@ -4,7 +4,7 @@ html {
     background-repeat: no-repeat;
     width: 90%;
     color:white;
-    font-family:  Verdana;
+    font-family:  Arial;
 }
 body{
    
@@ -15,6 +15,153 @@ body{
     background: rgba(242, 244, 245, 0);
    
  }
-
+ 
 
  
+/* #### iPhone 4+ Portrait or Landscape #### */
+@media screen and (max-width: 320px){
+  font-size: 0.4em!important;
+}
+
+/* #### iPhone 5 Portrait or Landscape #### */
+@media screen and (max-width: 568px)  and (min-width: 321px){
+  font-size: 0.6em!important;
+}
+
+/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
+@media (max-width: 767px) and (min-width: 569px) {
+  font-size: 0.7em!important;
+}
+
+/* #### Tablets Portrait or Landscape #### */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+  font-size: 0.8em!important;
+}
+
+/* #### Desktops #### */
+@media screen and (min-width: 1024px){
+  font-size: 1em!important;
+}
+button.close {
+    padding: 0;
+    background: 0 0;
+    border: 0;
+    -webkit-appearance: none;
+  }
+  button:disabled {
+      background-color: #eee;
+      color: #aaa;
+  }
+  input[type=text], input[type=date] {
+    width: 60%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  select {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  
+
+  .btn {
+    margin: 10px;
+    padding: 10px;
+    border: 1px;
+    border-radius: 2px;
+    color: white;
+  }
+  
+  .btn:hover,
+  .btn:active {
+    background: #5c5c5c;
+  }
+  
+  .btn-primary {
+    background-color: #45a049
+  }
+  .btn-default {
+    background-color: #768877
+  }
+  .combo-group {  
+    display:flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-shrink: 1
+  }
+  .combo-item {
+    flex-basis: auto;
+    flex-grow: 3 1;
+    
+  }
+ 
+  .link-modal {
+    margin-top: 3em;
+  }
+  
+  .link-modal button {
+     
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: 0.3em;
+    padding: 10px;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+  }
+  .center-block {
+      margin-left: auto;
+      margin-right: auto;
+      width: 8em;
+  }
+  .pull-right {
+     float: right !important;
+   }
+  .pull-left {
+     float: left !important;
+   }
+  
+   .form-control {
+      min-width: 0;
+      width: 25px;
+  }
+
+  .enroll-container {
+    background-color: #e0e0e7;
+    font-size: 14px;
+    border-radius: 20px;
+    border: 1px solid white;
+    margin: 2px;
+    padding: 2px;
+  }

@@ -34,3 +34,11 @@ export const USERS =  [
         'name': 'Julio Navarro'
     },
 ]
+
+export const GENRES = [
+    { id: 1, name: 'Novela' },
+    { id: 2, name: 'Terror' },
+    { id: 3, name: 'Infantil' },
+    { id: 4, name: 'Poesía' },
+    { id: 5, name: 'Aventura' }
+];

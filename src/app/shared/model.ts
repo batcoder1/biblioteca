@@ -19,15 +19,27 @@ export class Metadata {
     isbin: string;
     genre: string;
     reserved: string;
-    date: Date;
+    date: string;
     constructor(data: string) {
         this.type = data.substring(0, 1);
         this.isbin = data.substring(1, 18);
         this.genre = data.substring(18, 30);
         this.reserved = data.substring(30, 50);
-        this.date = new Date(parseInt(data.substring(50, 65), 0) * 1000);
+        this.date = data.substring(50, 65);
    }
 }
+
+export class Reader {
+    user: User;
+    read: string[];
+    constructor(user: User, read: string[]) {
+        this.user = user;
+        this.read = read;
+    }
+}
+
 export interface JsonResponse {
     books: Book[];
 }
+
+ 

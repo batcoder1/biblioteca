@@ -1,8 +1,7 @@
 import { USERS } from './../../shared/constants';
-import { Component } from '@angular/core';
 import { BookService } from './../../services/book.service';
-import { Book } from '../../shared/model';
-import { OnInit } from '@angular/core';
+import { Book, Reader } from '../../shared/model';
+import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -15,7 +14,7 @@ import 'rxjs/add/operator/catch';
 export class UserComponent implements OnInit {
     books: Book[] = [];
     new = false;
-    users = USERS;
+    readers: Reader[] = [];
     book: Book;
     estado = 'Lectores';
     constructor(private bookService: BookService) {
@@ -25,7 +24,19 @@ export class UserComponent implements OnInit {
         this.bookService.getBooks()
             .subscribe(result => {
                 this.books = result;
+                USERS.forEach(user => {
+                    let reader = new Reader(user, []);
+                    this.books.forEach(book => {
+                        book.users.forEach(lect => {
+                            if (user.id === lect.id) {
+                                reader.read.push(book.title);
+                            }
+                        });
+                    });
+                    this.readers.push(reader);
+                });
             }
         );
+        console.log(this.readers);
     }
 }

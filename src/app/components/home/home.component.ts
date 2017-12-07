@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { BookComponent } from '../book/book.component';
 
 @Component({
     selector: 'app-home',
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
 })
 
 export class HomeComponent {
-
+    @ViewChild('childModal') childModal: BookComponent;
     constructor() {}
 }
 

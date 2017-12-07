@@ -11,6 +11,7 @@
   .Grid-cell {
     grid-column-start: 1;
     grid-column: auto;
+    
   }
 
   .Grid-button {
@@ -33,3 +34,12 @@
   
     border-bottom: 1px solid white;
   }
+  .Grid-body {
+    
+    margin: 0.2em 0;
+    
+  
+    border-bottom: 1px solid white;
+  }
+
+ 
