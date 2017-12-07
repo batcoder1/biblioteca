@@ -1,7 +1,6 @@
-import { MyModalModule } from './components/modal/my-modal.module';
 import { BookModule } from './components/book/book.module';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouteModule } from './modules/root/route.module';
+import { RouteModule } from './route.module';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -19,8 +18,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FormsModule,
     RouteModule,
     BookModule,
-    ModalModule.forRoot(),
-    MyModalModule
+    ModalModule.forRoot()
   ],
   declarations: [ AppComponent,
     HomeComponent,

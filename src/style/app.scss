@@ -18,30 +18,7 @@ body{
  
 
  
-/* #### iPhone 4+ Portrait or Landscape #### */
-@media screen and (max-width: 320px){
-  font-size: 0.4em!important;
-}
 
-/* #### iPhone 5 Portrait or Landscape #### */
-@media screen and (max-width: 568px)  and (min-width: 321px){
-  font-size: 0.6em!important;
-}
-
-/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
-@media (max-width: 767px) and (min-width: 569px) {
-  font-size: 0.7em!important;
-}
-
-/* #### Tablets Portrait or Landscape #### */
-@media screen and (min-width: 768px) and (max-width: 1024px){
-  font-size: 0.8em!important;
-}
-
-/* #### Desktops #### */
-@media screen and (min-width: 1024px){
-  font-size: 1em!important;
-}
 button.close {
     padding: 0;
     background: 0 0;
@@ -49,7 +26,11 @@ button.close {
     -webkit-appearance: none;
   }
   button:disabled {
-      background-color: #eee;
+      background-color: #c5d6c6;
+      color: #b9b6b6;
+  }
+  input:disabled {
+      background-color: #c5d6c6;
       color: #aaa;
   }
   input[type=text], input[type=date] {
@@ -114,7 +95,8 @@ button.close {
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    flex-shrink: 1
+    flex-shrink: 1;
+   
   }
   .combo-item {
     flex-basis: auto;
@@ -165,3 +147,28 @@ button.close {
     margin: 2px;
     padding: 2px;
   }
+
+  /* #### iPhone 4+ Portrait or Landscape #### */
+@media screen and (max-width: 320px){
+  font-size: 0.4em!important;
+}
+
+/* #### iPhone 5 Portrait or Landscape #### */
+@media screen and (max-width: 568px)  and (min-width: 321px){
+  font-size: 0.6em!important;
+}
+
+/* #### iPhone 6 and 6 plus Portrait or Landscape #### */
+@media (max-width: 767px) and (min-width: 569px) {
+  font-size: 0.7em!important;
+}
+
+/* #### Tablets Portrait or Landscape #### */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+  font-size: 0.8em!important;
+}
+
+/* #### Desktops #### */
+@media screen and (min-width: 1024px){
+  font-size: 1em!important;
+}

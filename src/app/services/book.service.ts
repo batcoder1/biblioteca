@@ -19,7 +19,8 @@ export class BookService {
         let books: Book[] = [];
         result.books.forEach((element: Book) => {
           const book = new Book(element);
-          book.metadata.date = this.dateFormat(new Date(parseInt(book.metadata.date) * 1000).toString());
+          book.metadata.genre = book.metadata.genre.trim();
+          book.metadata.date = this.dateFormat(new Date(parseInt(book.metadata.date, 0) * 1000).toString());
           books = [...books, book];
         });
         return books;
@@ -31,4 +32,4 @@ export class BookService {
     const dateformat = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
     return dateformat;
   }
-}
+};

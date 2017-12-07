@@ -1,11 +1,16 @@
 
+input[type="text"].filter {
+  height: 20px;
+}
+
+ 
 .Grid {
   display: grid;
   align-self: center;
   justify-content: stretch;
   align-content: stretch;
   align-items: center;
-  grid-template-columns: 25% 15% 5% 15% 5% 15% 10% 10%;
+  grid-template-columns: 25% 10% 5% 15% 10% 15% 10% 10%;
   grid-template-rows: auto;
 }
 

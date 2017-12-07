@@ -42,4 +42,9 @@ export interface JsonResponse {
     books: Book[];
 }
 
- 
+export interface Filter {
+    title: string;
+    author: string;
+    isbin: string;
+    genre: string;
+}

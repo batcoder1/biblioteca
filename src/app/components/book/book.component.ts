@@ -1,8 +1,9 @@
+
 import { GENRES } from './../../shared/constants';
-import { Metadata } from './../../shared/model';
+import { Metadata, Filter } from './../../shared/model';
 import { Component } from '@angular/core';
 import { BookService } from './../../services/book.service';
-import { Book, User } from '../../shared/model';
+import { Book, User, Metadata } from '../../shared/model';
 import { OnInit } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -26,23 +27,22 @@ export class BookComponent implements OnInit {
     books: Book[] = [];
     new = false;
     book: Book;
-    filterField= {title: '', author: '', isbin: '', genre: ''};
+    filters: Filter= {title: '', author: '', isbin: '', genre: ''};
     bookForm: FormGroup;
     filterForm: FormGroup;
     userToAdd: User[] = [];
+    search = false;
+    formControl: FormControl;
     isDisabledAuthorGenre = false;
-    isDisabledTitleAuthorGenre = false;
+    genre = '';
     constructor(private bookService: BookService, private fb: FormBuilder) {
     }
 
     ngOnInit() {
         this.bookService.getBooks()
-            .subscribe(result => {
-                this.books = result;
-                console.log(result);
-            }
-            );
+            .subscribe(result => this.books = result);
         this.createForm();
+        this.subcribeToFormChanges();
     }
     createForm() {
         this.bookForm = this.fb.group({
@@ -50,30 +50,34 @@ export class BookComponent implements OnInit {
             author: ['', Validators.required],
             users: [],
             metadata: this.fb.group({
-                type: 'T',
-           
-      isbin: '',
+                type: 'L',
+                isbin: '',
                 genre: '',
                 reserved: '',
                 date: '1999-01-01'
 
             })
         });
-        this.filterForm = new FormGroup({
-            title: new FormControl({value: '', disable: this.isDisabledTitleAuthorGenre}),
-            author: new FormControl({value: '', disable: this.isDisabledAuthorGenre || this.isDisabledTitleAuthorGenre}),
-            isbin: new FormControl({value: ''}),
-            genre: new FormControl({value: '', disable: this.isDisabledAuthorGenre }),
+        this.filterForm = this.fb.group({
+            title: [''],
+            author: [''],
+            genre: [''],
+            isbin: ['']
         });
     }
     editBook(book: Book) {
         this.loadBookInForm(book);
         this.childModal.show();
     }
-    editedBook(book: Book) {
-        const index = this.books.indexOf(book);
-        this.books.splice(index, 1, book);
-        this.closeModal();
+    loadBookInForm(book: Book) {
+        book.metadata.date = book.metadata.date;
+     
+        book.metadata.genre = this.genres.filter(c => c === book.metadata.genre)[0];
+        this.bookForm.controls['title'].setValue(book.title);
+        this.bookForm.controls['author'].setValue(book.author);
+        this.bookForm.controls['metadata'].setValue(book.metadata);
+        this.bookForm.controls['users'].setValue(book.users);
+        this.userToAdd = book.users;
     }
     deleteBook(book: Book) {
         const index = this.books.indexOf(book);
@@ -101,8 +105,8 @@ export class BookComponent implements OnInit {
 
     confirm() {
         const book = this.prepareSaveBook();
-        console.log(this.books.indexOf(book));
-        if (this.books.indexOf(book) === -1) {
+        const existe: Book[] = this.books.filter(b => b.metadata.isbin === book.metadata.isbin);
+        if (existe.length === 0) {
             this.books = [...this.books, book];
             this.closeModal();
         } else {
@@ -110,8 +114,18 @@ export class BookComponent implements OnInit {
         }
 
     }
+    editedBook(book: Book) {
+        this.books.forEach(b => {
+            if (b.metadata.isbin === book.metadata.isbin) {
+                const index = this.books.indexOf(b);
+                this.books.splice(index, 1, book);
+                this.closeModal();
+                this.books = [...this.books];
+            }
+        });
+    }
     addUserToLibro(event) {
-        // if don exist in userToAdd array, lo  incluye
+        // if it doent exist in userToAdd array then insert it
         if (this.userToAdd.indexOf(this.users[event.target.selectedIndex]) === -1) {
             this.userToAdd.push(this.users[event.target.selectedIndex]);
         }
@@ -125,18 +139,43 @@ export class BookComponent implements OnInit {
         this.bookForm.reset();
         this.childModal.hide();
     }
-    loadBookInForm(book: Book) {
-        book.metadata.date = book.metadata.date;
-        this.bookForm.controls['title'].setValue(book.title);
-        this.bookForm.controls['author'].setValue(book.author);
-        this.bookForm.controls['metadata'].setValue(book.metadata);
-        this.bookForm.controls['users'].setValue(book.users);
-        this.userToAdd = book.users;
+   
+    subcribeToFormChanges() {
+        const filterFormValueChanges$ = this.filterForm.valueChanges;
+        filterFormValueChanges$.subscribe(filterChanges => {
+            this.filters = Object.assign({}, filterChanges);
+        });
     }
-    
-    filter(event) {
-        return event;
 
+    deleteFilters(){
+        this.filterForm.reset();
+        this.filterForm.controls['title'].enable();
+        this.filterForm.controls['author'].enable();
+        this.filterForm.controls['genre'].enable();
+        this.isDisabledAuthorGenre = false;
+    }
+    toggleSearch() {
+        this.search = !this.search;
+    }
+    disableAuthorGenre() {
+        this.filterForm.controls['author'].disable();
+        this.filterForm.controls['genre'].disable();
+        this.isDisabledAuthorGenre = true;
+
+    }
+    disableTitleAuthorGenre() {
+        if (!this.isDisabledAuthorGenre) {
+            this.filterForm.controls['title'].disable();
+            this.filterForm.controls['author'].disable();
+            this.filterForm.controls['genre'].disable();
+        }
+
+    }
+    changeGenre() {
+        this.bookForm.controls['metadata'].valueChanges.subscribe(metadata =>  {
+
+         this.genre = metadata.genre;
+        });
     }
 
 }

@@ -1,7 +1,7 @@
+import { AppModule } from './../../app.module';
 import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
 import { APP_BASE_HREF } from '@angular/common';
-import { AppModule } from './app.module';
+import { HomeComponent } from './home.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -13,8 +13,8 @@ describe('AppComponent', () => {
       ]
     }).compileComponents();
   }));
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should create the component', async(() => {
+    const fixture = TestBed.createComponent(HomeComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));

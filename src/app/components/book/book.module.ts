@@ -1,3 +1,4 @@
+import { FilterPipe } from './filter.pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BookComponent } from './../../components/book/book.component';
@@ -6,7 +7,7 @@ import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [ModalModule, BrowserModule, FormsModule, ReactiveFormsModule],
-  declarations: [BookComponent],
+  declarations: [BookComponent, FilterPipe],
   providers: [],
   schemas: [NO_ERRORS_SCHEMA],
   exports: []
@@ -14,3 +15,4 @@ import { ModalModule } from 'ngx-bootstrap';
 })
 export class BookModule {
 }
+

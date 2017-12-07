@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
             .subscribe(result => {
                 this.books = result;
                 USERS.forEach(user => {
-                    let reader = new Reader(user, []);
+                    const reader = new Reader(user, []);
                     this.books.forEach(book => {
                         book.users.forEach(lect => {
                             if (user.id === lect.id) {
