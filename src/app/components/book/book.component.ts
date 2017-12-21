@@ -70,7 +70,6 @@ export class BookComponent implements OnInit {
     }
     loadBookInForm(book: Book) {
         book.metadata.date = book.metadata.date;
-     
         book.metadata.genre = this.genres.filter(c => c === book.metadata.genre)[0];
         this.bookForm.controls['title'].setValue(book.title);
         this.bookForm.controls['author'].setValue(book.author);
@@ -81,6 +80,7 @@ export class BookComponent implements OnInit {
     deleteBook(book: Book) {
         const index = this.books.indexOf(book);
         this.books.splice(index, 1);
+        this.books = [...this.books];
     }
     prepareSaveBook(): Book {
         const formModel = this.bookForm.value;
@@ -138,7 +138,7 @@ export class BookComponent implements OnInit {
         this.bookForm.reset();
         this.childModal.hide();
     }
-   
+
     subcribeToFormChanges() {
         const filterFormValueChanges$ = this.filterForm.valueChanges;
         filterFormValueChanges$.subscribe(filterChanges => {
@@ -146,7 +146,7 @@ export class BookComponent implements OnInit {
         });
     }
 
-    deleteFilters(){
+    deleteFilters() {
         this.filterForm.reset();
         this.filterForm.controls['title'].enable();
         this.filterForm.controls['author'].enable();

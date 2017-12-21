@@ -2,9 +2,9 @@
 html {
     background-image: url("/img/library.jpg");
     background-repeat: no-repeat;
-    width: 90%;
     color:white;
     font-family:  Arial;
+    font-size: 0.95em;
 }
 body{
    
@@ -150,25 +150,52 @@ button.close {
 
   /* #### iPhone 4+ Portrait or Landscape #### */
 @media screen and (max-width: 320px){
-  font-size: 0.4em!important;
+  html {
+    font-size: 0.2em;
+  }
+  .Grid-header{
+    font-size: 0.3em!important;
+  }
 }
 
 /* #### iPhone 5 Portrait or Landscape #### */
-@media screen and (max-width: 568px)  and (min-width: 321px){
-  font-size: 0.6em!important;
+@media screen and (max-width: 569px)  and (min-width: 321px){
+  html {
+    font-size: 0.3em!important;
+
+  }
+  .Grid-header{
+    font-size: 0.4em!important;
+  }
 }
 
 /* #### iPhone 6 and 6 plus Portrait or Landscape #### */
-@media (max-width: 767px) and (min-width: 569px) {
-  font-size: 0.7em!important;
+@media (max-width: 768px) and (min-width: 569px) {
+  html {
+    font-size: 0.6em!important;
+  }
+  .Grid-header{
+    font-size: 0.8em!important;
+  }
 }
 
 /* #### Tablets Portrait or Landscape #### */
 @media screen and (min-width: 768px) and (max-width: 1024px){
-  font-size: 0.8em!important;
+  html  {
+    font-size: 0.7em!important;
+  }
+  .Grid-header{
+    font-size: 0.9em!important;
+  }
 }
 
 /* #### Desktops #### */
 @media screen and (min-width: 1024px){
-  font-size: 1em!important;
+  html {
+    font-size: 1em!important;
+
+  }
+  .Grid-header{
+    font-size: 1.2em!important;
+  }
 }

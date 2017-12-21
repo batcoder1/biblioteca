@@ -17,8 +17,8 @@ input[type="text"].filter {
 .Grid-cell {
   grid-column-start: 1;
   grid-column: auto;
+  margin: 10px;
 }
-
 .Grid-button {
   margin: 5px;
   border: 5px;
@@ -32,7 +32,6 @@ input[type="text"].filter {
 }
 
 .Grid-header {
-  font-size: 1.5em;
   font-style: bold;
   margin: 0.5em 0;
   padding: 0.2em 0;
@@ -189,12 +188,6 @@ input[type="text"].filter {
   }
 }
 
-@media (min-width:992px) {
-  .modal-lg {
-    width: 900px
-  }
-}
-
 .close {
   float: right;
   font-size: 1.5rem;
@@ -216,3 +209,10 @@ label {
   .ng-invalid:not(form)  {
     border-left: 3px solid #a94442;  
   }
+
+
+@media (min-width:992px) {
+  .modal-lg {
+    width: 900px
+  }
+}

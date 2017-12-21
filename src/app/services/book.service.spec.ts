@@ -18,7 +18,7 @@ describe('BookService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should create books', () => {
+  it('should get books', () => {
     const service: BookService = TestBed.get(BookService);
     service.getBooks().subscribe(
       books => {

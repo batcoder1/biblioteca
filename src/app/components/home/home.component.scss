@@ -3,21 +3,23 @@ a {
     text-decoration: none;
     text-transform: uppercase;
     color:white;
+    border: 1px solid white;
+    padding: 2.6em 2.9em;
   }
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80%;
+    width: 100%;
     flex-wrap: wrap;
     flex-direction: row;
   }
   
   .item {
-    height: 50%;
+    height: 40%;
     flex-basis: auto;
     flex-grow: 1;
-    border: 1px solid white;
     margin: 1em;
     padding: 15em 0.5em; 
   }
